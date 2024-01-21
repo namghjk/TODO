@@ -1,4 +1,6 @@
 @extends('layouts.main')
 @section('content')
-    Nội dung
+    @if (isset($user))
+        <h1 style="color: yellow">{{ $user->name }}</h1>
+    @endif
 @endsection

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Session;
 class LoginController extends Controller
 {
     public function index(){
-        return view('admin.pages.login',[
+        return view('Admin.pages.login',[
             'title' => 'Login',
         ]);
     }
@@ -22,8 +22,9 @@ class LoginController extends Controller
             'email' =>$request->input('email'),
             'password' =>$request->input('password'),
         ],$request->input('remember'))){
+            $user = Auth::user();
             Session::flash('success', 'Login Successfully');
-            return redirect()->route('admin');
+            return redirect()->route('home')->with('user', $user);
         }
 
         Session::flash('error','Email or Password Invalid');

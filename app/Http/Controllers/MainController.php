@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
     public function index()
     {
-        return view('admin.page.home', ['title' => 'Home']);
+        $user = Auth::user();
+        return view('admin.pages.home', ['title' => 'Home','user'=>$user]);
     }
 }

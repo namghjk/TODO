@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('address')->default('');
-            $table->integer('status')->default(1);
+            $table->integer('status')->default(0);
             $table->string('email')->unique();
             $table->string('role')->default('user');
             $table->timestamp('email_verified_at')->nullable();

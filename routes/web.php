@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MainController;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -26,6 +27,7 @@ Route::middleware(['preventBackHistory'])->group(function () {
 Route::get('/register', [RegisterController::class, 'index'])->name('register')->middleware(RedirectIfAuthenticated::class);
 Route::post('/register/store', [registerController::class, 'store'])->name('registerPost');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','checkUserStatus'])->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('home');
+    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
