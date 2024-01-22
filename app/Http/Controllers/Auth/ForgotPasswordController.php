@@ -80,14 +80,22 @@ class ForgotPasswordController extends Controller
 
     public function postResetPassword(LoginRequest $request)
     {
+
+        if ($request->confirmPassword != $request->password) {
+            Session::flash('error', 'Password does not match');
+            return redirect()->back()->withInput();
+        }
+        
         $updatePassword = DB::table('password_resets')->where([
             'email' => $request->email,
             'token' => $request->token,
         ])->first();
+
         if (!$updatePassword) {
             Session::flash('error', 'Invalid reset link');
             redirect()->to(route('resetPassword'));
         }
+
         User::where("email", $request->email)->update(['password' => Hash::make($request->password)]);
 
         DB::table('password_resets')->where(['email' => $request->email])->delete();
