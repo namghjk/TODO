@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -27,7 +28,12 @@ Route::middleware(['preventBackHistory'])->group(function () {
 Route::get('/register', [RegisterController::class, 'index'])->name('register')->middleware(RedirectIfAuthenticated::class);
 Route::post('/register/store', [registerController::class, 'store'])->name('registerPost');
 
-Route::middleware(['auth','checkUserStatus'])->group(function () {
+Route::get('/forgotPassword', [ForgotPasswordController::class, 'index'])->name('forgotPassword');
+Route::post('/forgotPassword', [ForgotPasswordController::class, 'postForgetPassword'])->name('postForgetPassword');
+Route::get('/resetPassword/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('resetPassword');
+Route::post('/resetPassword', [ForgotPasswordController::class, 'postResetPassword'])->name('postResetPassword');
+
+Route::middleware(['auth', 'checkUserStatus'])->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('home');
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 });

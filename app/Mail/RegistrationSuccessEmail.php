@@ -32,7 +32,7 @@ class RegistrationSuccessEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('Mail.registration-success')
+        return $this->view('mails.registration_success')
                     ->subject('Registration Successful');
     }
 }

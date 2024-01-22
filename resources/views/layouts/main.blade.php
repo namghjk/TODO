@@ -3,6 +3,7 @@
 
 <head>
     @include('layouts.header')
+    
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">

@@ -53,6 +53,13 @@
                                 </label>
                             </div>
                         </div> 
+                        <div class="col-12">
+                            <div class="w-100 mt-1">
+                                <label for="Register">
+                                   <a  href="{{route('forgotPassword')}}"  class="text-primary "> Forgot your password ?</a>
+                                </label>
+                            </div>
+                        </div> 
                     </div>
                     @csrf
                 </form>
