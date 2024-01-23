@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\UserInforController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 
@@ -36,4 +37,14 @@ Route::post('/resetPassword', [ForgotPasswordController::class, 'postResetPasswo
 Route::middleware(['auth', 'checkUserStatus'])->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('home');
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+   
 });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/userInfor/{id}', [UserInforController::class, 'index'])->name('userInfor');
+    Route::post('/userInfor/{id}', [UserInforController::class, 'update'])->name('updateUserInfor');
+
+   
+});
+
+

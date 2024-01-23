@@ -15,7 +15,7 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
                 @include('layouts.alert')
-                <form action="{{route('loginPost')}}" method="post">
+                <form action="{{ route('loginPost') }}" method="post">
                     <div class="input-group mb-3">
                         <input type="email" name="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -23,6 +23,9 @@
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
+                        @if ($errors->has('email'))
+                            <span type='error' style="color: red">{{ $errors->first('email') }}</span>
+                        @endif
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="form-control" placeholder="Password">
@@ -46,20 +49,22 @@
                             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                         </div>
                         <!-- /.col -->
-                         <div class="col-12">
+                        <div class="col-12">
                             <div class="w-100 mt-3">
                                 <label for="Register">
-                                   <a  href="{{route('register')}}"  class="text-primary "> Don't have an account? Register now </a>
+                                    <a href="{{ route('register') }}" class="text-primary "> Don't have an account?
+                                        Register now </a>
                                 </label>
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-12">
                             <div class="w-100 mt-1">
                                 <label for="Register">
-                                   <a  href="{{route('forgotPassword')}}"  class="text-primary "> Forgot your password ?</a>
+                                    <a href="{{ route('forgotPassword') }}" class="text-primary "> Forgot your password
+                                        ?</a>
                                 </label>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                     @csrf
                 </form>
