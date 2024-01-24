@@ -14,7 +14,7 @@
                 <img src="/template/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="{{ route('userInfor', $user->id) }}" class="d-block">{{Auth::user()->name}}</a>
+                <a href="{{ route('userInfor', $user->id) }}" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -38,35 +38,33 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item menu-open">
-                    
-                        <a href="#" class="nav-link active">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Post
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-             
-                    <ul class="nav nav-treeview">
-                       
-                            <li class="nav-item">
-                                <a href=""
-                                    class="nav-link {{ Request::route()->getName() == 'newPost' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Add new post</p>
-                                </a>
-                            </li>
-                       
 
-                       
-                            <li class="nav-item">
-                                <a href=""
-                                    class="nav-link {{ Request::route()->getName() == 'showAll' ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>All post</p>
-                                </a>
-                            </li>
-                  
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Post
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{ route('posts.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add new post</p>
+                            </a>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a href="{{ route('posts.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All post</p>
+                            </a>
+                        </li>
+
 
 
 

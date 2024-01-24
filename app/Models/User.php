@@ -48,6 +48,11 @@ class User extends Authenticatable
 
     public function getNameAttribute()
     {
-        return $this->first_name. ' ' . $this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

@@ -37,14 +37,10 @@ Route::post('/resetPassword', [ForgotPasswordController::class, 'postResetPasswo
 Route::middleware(['auth', 'checkUserStatus'])->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('home');
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
-
-   
 });
 Route::middleware(['auth'])->group(function () {
     Route::get('/userInfor/{id}', [UserInforController::class, 'index'])->name('userInfor');
     Route::post('/userInfor/{id}', [UserInforController::class, 'update'])->name('updateUserInfor');
 
-   
+    Route::resource('posts', 'App\Http\Controllers\Post\PostController');
 });
-
-

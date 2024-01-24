@@ -19,7 +19,7 @@ class ForgotPasswordController extends Controller
 {
     public function index()
     {
-        return view('Admin.pages.forgotPassword', [
+        return view('Admin.pages.auth.forgotPassword', [
             'title' => 'Forgot Password',
         ]);
     }

@@ -3,13 +3,13 @@
 
 <head>
     @include('layouts.header')
-    
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
-       
+
 
         <!-- Navbar -->
         @include('layouts.navbar')
@@ -24,7 +24,11 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    @include('layouts.alert')
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="row">
                         <!-- left column -->
                         <div class="col-md-12">
