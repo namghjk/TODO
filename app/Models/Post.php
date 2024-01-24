@@ -42,6 +42,12 @@ class Post extends Model
         return $this->slug ?? $this->generateSlug($options);
     }
 
+    public function getPublishDateFormattedAttribute()
+    {
+        return $this->publish_date->format('y/m/d');
+    }
+
+
     public function getThumbnailAttribute()
     {
         if ($this->hasMedia('thumbnails')) {
