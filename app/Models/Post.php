@@ -26,6 +26,11 @@ class Post extends Model
         'publish_date',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     protected $attributes = [
         'slug' => '', // Đặt giá trị mặc định là một chuỗi trống
     ];

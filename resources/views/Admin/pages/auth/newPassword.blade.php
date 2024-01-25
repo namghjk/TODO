@@ -14,7 +14,11 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Reset your password</p>
-                @include('layouts.alert')
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 <form action="{{ route('postResetPassword') }}" method="post">
                     @csrf
                     <input type="text" hidden="true" value="{{ $token }}" name="token" />
