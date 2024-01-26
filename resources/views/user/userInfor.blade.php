@@ -1,33 +1,33 @@
-@extends('layouts.main')
+@extends('partials.main')
 @section('content')
     <div class="card">
-        <form action="{{ route('updateUserInfor', $user->id) }}" method="post">
+        <form action="{{ route('update_user_infor', $user->id) }}" method="post">
             @csrf
             <div class="card-body">
                 <div class="form-group mb-3">
                     <label for="first_name">First name</label>
                     <input type="text" class="form-control" id="first_name" name="first_name"
                         value="{{ $user->first_name }}">
-                    @if ($errors->has('first_name'))
-                        <span type='error' style="color: red">{{ $errors->first('first_name') }}</span>
-                    @endif
+                    @error('first_name')
+                        <span class="error" style="color: red">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label for="last_name">Last name</label>
                     <input type="text" class="form-control" id="last_name" name="last_name"
                         value="{{ $user->last_name }}">
-                    @if ($errors->has('last_name'))
-                        <span type='error' style="color: red">{{ $errors->first('last_name') }}</span>
-                    @endif
+                    @error('last_name')
+                        <span class="error" style="color: red">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group">
                     <label for="address">Address</label>
                     <input type="text" class="form-control" id="address" name="address" value="{{ $user->address }}">
-                    @if ($errors->has('address'))
-                        <span type='error' style="color: red">{{ $errors->first('address') }}</span>
-                    @endif
+                    @error('address')
+                        <span class="error" style="color: red">{{ $message }}</span>
+                    @enderror
                 </div>
 
 

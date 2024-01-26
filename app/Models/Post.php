@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
-class Post extends Model
+
+class Post extends Model implements HasMedia
 {
-    use HasSlug, HasFactory, InteractsWithMedia;
+    use  HasFactory, InteractsWithMedia;
 
     protected $fillable = [
         'user_id',
@@ -35,18 +35,6 @@ class Post extends Model
         'slug' => '', // Đặt giá trị mặc định là một chuỗi trống
     ];
 
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title') // Đổi 'name' thành 'title'
-            ->saveSlugsTo('slug');
-    }
-
-    public function createSlug(SlugOptions $options): string
-    {
-        return $this->slug ?? $this->generateSlug($options);
-    }
-
     public function getPublishDateFormattedAttribute()
     {
         return $this->publish_date->format('y/m/d');
@@ -59,10 +47,15 @@ class Post extends Model
             return $this->getFirstMediaUrl('thumbnails');
         }
 
-        return '/public/thumbnail/default.png';
+        return asset('app/public/thumbnails/default.png');
     }
 
-    public function scopeByStatus($query, $status = 0)
+    public function scopeStatusNewPost($query, $status = 0)
+    {
+        return $query->where('status', $status);
+    }
+
+    public function scopeStatusUpdatePost($query, $status = 1)
     {
         return $query->where('status', $status);
     }

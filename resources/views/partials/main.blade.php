@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('layouts.header')
+    @include('partials.header')
 
 </head>
 
@@ -12,11 +12,11 @@
 
 
         <!-- Navbar -->
-        @include('layouts.navbar')
+        @include('partials.navbar')
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        @include('layouts.sidebar')
+        @include('partials.sidebar')
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -25,9 +25,7 @@
             <section class="content">
                 <div class="container-fluid">
                     @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
+                       @include('partials.alert')
                     @endif
                     <div class="row">
                         <!-- left column -->
@@ -59,7 +57,7 @@
 
 
 
-    @include('layouts.footer')
+    @include('partials.footer')
 </body>
 
 </html>

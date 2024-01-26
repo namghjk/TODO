@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('partials.main')
 @section('content')
 
     @if (isset($user))

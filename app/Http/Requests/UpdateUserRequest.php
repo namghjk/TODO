@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:30'],
             'last_name' => ['required', 'string', 'max:20'],
-            'address' => ['string', 'max:300'],
+            'address' => ['nullable', 'string', 'max:300'],
         ];
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('partials.main')
 @section('header')
     <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
 @endsection
@@ -10,17 +10,19 @@
                 @csrf
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" class="form-control" name="title" placeholder="Enter title" value="{{ old('title') }}">
-                    @if ($errors->has('title'))
-                        <span type='error' style="color: red">{{ $errors->first('title') }}</span>
-                    @endif
+                    <input type="text" class="form-control" name="title" placeholder="Enter title"
+                        value="{{ old('title') }}">
+                    @error('title')
+                        <span class="error" style="color: red">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <input type="text" class="form-control" name="description" placeholder="Enter description" value="{{ old('description') }}">
-                    @if ($errors->has('description'))
-                        <span type='error' style="color: red">{{ $errors->first('description') }}</span>
-                    @endif
+                    <input type="text" class="form-control" name="description" placeholder="Enter description"
+                        value="{{ old('description') }}">
+                    @error('description')
+                        <span class="error" style="color: red">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label for="content" class="form-label">Content</label>
@@ -32,9 +34,9 @@
                         <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail">
                         <label class="custom-file-label" for="thumbnail">Choose file</label>
                     </div>
-                    @if ($errors->has('thumbnail'))
-                        <span type='error' style="color: red">{{ $errors->first('thumbnail') }}</span>
-                    @endif
+                    @error('thumbnail')
+                        <span class="error" style="color: red">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <script>

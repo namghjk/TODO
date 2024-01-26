@@ -14,7 +14,7 @@
                 <img src="/template/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="{{ route('userInfor', $user->id) }}" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('user_infor', $user->id) }}" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 

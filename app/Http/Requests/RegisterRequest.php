@@ -27,7 +27,7 @@ class RegisterRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:30'],
             'last_name' => ['required', 'string', 'max:20'],
             'address' => ['string','max:300'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => [ 'string', 'email', 'max:255', 'unique:users'],
             'password' => [
                 'required', 'string', 'min:8',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]+$/',

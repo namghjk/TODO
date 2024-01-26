@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('layouts.header')
+    @include('partials.header')
 </head>
 
 <body class="hold-transition login-page">
@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Register to start your session</p>
-                <form action="{{ route('registerPost') }}" method="post">
+                <form action="{{ route('register_post') }}" method="post">
                     <div class="input-group mb-3">
                         <input type="email" name="email" class="form-control" placeholder="name@example.com"
                             value="{{ old('email') }}">
@@ -36,9 +36,9 @@
                                 <i class="bi bi-file-person"></i>
                             </div>
                         </div>
-                        @if ($errors->has('first_name'))
-                            <span type='error' style="color: red">{{ $errors->first('first_name') }}</span>
-                        @endif
+                        @error('first_name')
+                            <span class="error" style="color: red">{{ $message }}</span>
+                        @enderror
                         <div clas </div>
                             s="input-group mb-3">
                             <input type="last_name" name="last_name" class="form-control" placeholder="last_name"
@@ -48,9 +48,9 @@
                                     <i class="bi bi-file-person"></i>
                                 </div>
                             </div>
-                            @if ($errors->has('last_name'))
-                                <span type='error' style="color: red">{{ $errors->first('last_name') }}</span>
-                            @endif
+                            @error('last_name')
+                                <span class="error" style="color: red">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <div class="input-group mb-3">
@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="input-group mb-3">
-                            <input type="text" name="password" class="form-control" placeholder="password">
+                            <input type="password" name="password" class="form-control" placeholder="password">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
@@ -88,7 +88,7 @@
                         </div>
 
                         <div class="input-group mb-3">
-                            <input type="text" name="confirmPassword" class="form-control"
+                            <input type="password" name="confirmPassword" class="form-control"
                                 placeholder="confirm password">
                             <div class="input-group-append">
                                 <div class="input-group-text">
@@ -126,7 +126,7 @@
     </div>
     <!-- /.login-box -->
 
-    @include('layouts.footer')
+    @include('partials.footer')
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('layouts.header')
+    @include('partials.header')
 </head>
 
 <body class="hold-transition login-page">
@@ -19,7 +19,7 @@
                             {{ session('success') }}
                         </div>
                     @endif
-                <form action="{{ route('loginPost') }}" method="post">
+                <form action="{{ route('login_post') }}" method="post">
                     <div class="input-group mb-3">
                         <input type="email" name="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -64,7 +64,7 @@
                         <div class="col-12">
                             <div class="w-100 mt-1">
                                 <label for="Register">
-                                    <a href="{{ route('forgotPassword') }}" class="text-primary "> Forgot your password
+                                    <a href="{{ route('forgot_password') }}" class="text-primary "> Forgot your password
                                         ?</a>
                                 </label>
                             </div>
@@ -78,7 +78,7 @@
     </div>
     <!-- /.login-box -->
 
-    @include('layouts.footer')
+    @include('partials.footer')
 </body>
 
 </html>

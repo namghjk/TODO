@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Post;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\uploadPostRequest;
+use App\Http\Requests\UploadPostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +19,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.post.showPost', ['title' => 'Post']);
+        return view('post.show', ['title' => 'Post']);
     }
 
     /**
@@ -30,7 +30,7 @@ class PostController extends Controller
     public function create()
     {
         $user = Auth::user();
-        return view('Admin.pages.Post.createPost', [
+        return view('post.create', [
             'title' => 'Add new post',
         ])->with('user', $user);
     }
@@ -41,19 +41,8 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(uploadPostRequest $request)
+    public function store(UploadPostRequest $request)
     {
-
-        if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
-            try {
-                $thumbnail = $request->file('thumbnail');
-                $thumbnailPath = 'thumbnails/' . $thumbnail->getClientOriginalName();
-                $thumbnail->move(public_path('thumbnails'), $thumbnailPath);
-            } catch (FileCannotBeAdded $e) {
-                return redirect()->back()->with('error', 'Failed to upload thumbnail.');
-            }
-        }
-
         $user = Auth::user();
         $post = new Post([
             'user_id' => $user->id,
@@ -62,8 +51,15 @@ class PostController extends Controller
             'content' => $request['content'],
         ]);
 
+        if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
+            try {
+                $thumbnail = $request->file('thumbnail');
+                $post->addMedia($thumbnail)->toMediaCollection();
+            } catch (FileCannotBeAdded $e) {
+                return redirect()->back()->with('error', 'Failed to upload thumbnail.');
+            }
+        }
 
-        $slugOptions = $post->getSlugOptions();
 
         $baseSlug = Str::slug($request['title'], '-');
         $slug = $baseSlug;

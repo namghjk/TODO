@@ -14,7 +14,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        return view('Admin.pages.auth.login', [
+        return view('auth.login', [
             'title' => 'Login',
         ]);
     }
@@ -28,5 +28,7 @@ class LoginController extends Controller
             Auth::login($user, $request->input('remember'));
             return redirect()->route('home')->with('user', $user);
         }
+        Session::flash('error', ' password or user is not correct');
+        return redirect()->back();
     }
 }

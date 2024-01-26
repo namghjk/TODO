@@ -1,1 +1,1 @@
-<a href="{{route('resetPassword',$token)}}">Reset Password</a>
+<a href="{{route('reset_password',$token)}}">Reset Password</a>

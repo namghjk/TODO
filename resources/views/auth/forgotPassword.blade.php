@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('layouts.header')
+    @include('partials.header')
 </head>
 
 <body class="hold-transition login-page">
@@ -19,7 +19,7 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <form action="{{ route('postForgetPassword') }}" method="post">
+                <form action="{{ route('post_forget_password') }}" method="post">
                     <div class="input-group mb-3">
                         <input type="email" name="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -44,7 +44,7 @@
     </div>
     <!-- /.login-box -->
 
-    @include('layouts.footer')
+    @include('partials.footer')
 </body>
 
 </html>

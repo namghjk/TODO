@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('layouts.header')
+    @include('partials.header')
 </head>
 
 <body class="hold-transition login-page">
@@ -19,7 +19,7 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <form action="{{ route('postResetPassword') }}" method="post">
+                <form action="{{ route('post_reset_password') }}" method="post">
                     @csrf
                     <input type="text" hidden="true" value="{{ $token }}" name="token" />
                     <div class="input-group mb-3">
@@ -78,7 +78,7 @@
     </div>
     <!-- /.login-box -->
 
-    @include('layouts.footer')
+    @include('partials.footer')
 </body>
 
 </html>

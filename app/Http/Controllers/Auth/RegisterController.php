@@ -15,7 +15,7 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        return view('admin.pages.auth.register', [
+        return view('auth.register', [
             'title' => 'Register',
         ]);
     }

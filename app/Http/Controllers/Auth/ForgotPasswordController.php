@@ -19,7 +19,7 @@ class ForgotPasswordController extends Controller
 {
     public function index()
     {
-        return view('Admin.pages.auth.forgotPassword', [
+        return view('auth.forgotPassword', [
             'title' => 'Forgot Password',
         ]);
     }
@@ -47,7 +47,7 @@ class ForgotPasswordController extends Controller
         dispatch(new SendForgotPasswordEmailJob($request->email, $token));
 
         Session::flash('success', 'We have sent an email to reset your password');
-        return redirect()->to(route('forgotPassword'));
+        return redirect()->to(route('forgot_password'));
     }
 
 
@@ -73,7 +73,7 @@ class ForgotPasswordController extends Controller
             Session::flash('error', 'The reset link has expired');
             return redirect()->to(route('forgotPassword'));
         }
-        return view('Admin.pages.newPassword', ['title' => 'Reset Password'], compact('token'));
+        return view('auth.newPassword', ['title' => 'Reset Password'], compact('token'));
     }
 
 
