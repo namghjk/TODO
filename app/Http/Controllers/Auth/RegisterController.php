@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Mail\RegistrationSuccessEmail;
 use App\Models\User;
+use App\Services\Auth\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,15 @@ use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
+    protected $authService;
+
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
+
+
     public function index()
     {
         return view('auth.register', [
@@ -22,25 +32,12 @@ class RegisterController extends Controller
 
     public function store(RegisterRequest $request)
     {
-
-        if ($request->confirmPassword != $request->password) {
-            Session::flash('error', 'Password does not match');
-            return redirect()->back()->withInput();
+        try {
+            $user = $this->authService->register($request);
+            return redirect()->route('login')->with('success', 'Register new user successfully');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
+            return redirect()->back();
         }
-        $user = new User([
-            'first_name' => $request['first_name'],
-            'last_name' => $request['last_name'],
-            'address' => $request['address'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-        ]);
-
-
-        $user->save();
-
-
-        Session::flash('success', 'Register new user successfully');
-        Mail::to($user->email)->send(new RegistrationSuccessEmail($user));
-        return redirect()->route('login');
     }
 }

@@ -26,7 +26,7 @@ class PostFactory extends Factory
             'user_id' => $user->id, // Lấy user_id của người dùng
             'title' => $title,
             'slug' => $slug,
-            'description' => $this->faker->optional()->paragraph(3), // maxLength: 200, mặc định null
+            'description' => $this->faker->optional()->text(200), // maxLength: 200, mặc định null
             'content' => $this->faker->text,
             'thumbnail' => $this->faker->imageUrl(),
         ];
