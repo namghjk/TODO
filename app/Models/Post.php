@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Post extends Model implements HasMedia
 {
-    use  HasFactory, InteractsWithMedia;
+    use  HasFactory, InteractsWithMedia, SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -43,11 +44,14 @@ class Post extends Model implements HasMedia
 
     public function getThumbnailAttribute()
     {
-        if ($this->hasMedia('thumbnails')) {
-            return $this->getFirstMediaUrl('thumbnails');
+        $media = $this->getFirstMedia('thumbnail');
+
+        if ($media) {
+            $path = 'thumbnails/' . $media->id . '/' . $media->file_name;
+            return asset($path);
         }
 
-        return asset('app/public/thumbnails/default.png');
+        return asset('thumbnails/default.png');
     }
 
     public function scopeStatusNewPost($query, $status = 0)

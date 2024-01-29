@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UploadPostRequest;
 use App\Models\Post;
+use App\Models\User;
 use App\Services\Post\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Illuminate\Support\Str;
 
@@ -30,7 +32,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('post.show', ['title' => 'Post']);
+        $user = Auth::user();
+        $posts = $user->posts()->paginate(2);
+        return view('post.index', compact('user', 'posts'), ['title' => 'Show all posts']);
     }
 
     /**
@@ -71,7 +75,6 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -82,7 +85,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $user = Auth::user();
+        return view('post.edit', compact('post', 'user'), ['title' => $post->title]);
     }
 
     /**
@@ -105,6 +110,18 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+
+        Session::flash('success', 'Delete post successfully');
+        return redirect()->to(route('posts.index'));
+    }
+
+    public function deleteAll()
+    {
+        $user = Auth::user();
+        $user->posts()->delete();
+        Session::flash('success', 'Delete all post successfully');
+        return redirect()->to(route('posts.index'));
     }
 }

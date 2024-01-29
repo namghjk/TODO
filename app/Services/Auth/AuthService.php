@@ -24,13 +24,14 @@ class AuthService
 {
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
-        $remember = $request->input('remember');
+        $credentials = $request->validated();
 
-        if (Auth::attempt($credentials, $remember)) {
+
+        if (Auth::attempt($credentials)) {
             $user = Auth::user();
             return $user;
         }
+
 
         throw new \Exception('Invalid credentials');
     }
@@ -105,7 +106,7 @@ class AuthService
 
     public function postResetPassword($email, $token, $password, $confirmPassword)
     {
-         if ($password != $confirmPassword) {
+        if ($password != $confirmPassword) {
             throw new \Exception('Password does not match');
         }
 

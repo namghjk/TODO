@@ -43,5 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user-infor/{id}', [UserInforController::class, 'index'])->name('user_infor');
     Route::post('/user-infor/{id}', [UserInforController::class, 'update'])->name('update_user_infor');
 
+    Route::delete('/posts/delete-all', [PostController::class, 'deleteAll'])->name('delete_all_posts');
+
     Route::resource('posts', PostController::class);
 });

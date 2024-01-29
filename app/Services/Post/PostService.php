@@ -7,9 +7,12 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class PostService
+class PostService implements HasMedia
 {
+    use InteractsWithMedia;
     public function store(UploadPostRequest $request)
     {
         $user = Auth::user();
@@ -23,7 +26,7 @@ class PostService
         if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
             try {
                 $thumbnail = $request->file('thumbnail');
-                $post->addMedia($thumbnail)->toMediaCollection();
+                $post->addMedia($thumbnail)->toMediaCollection('thumbnail');
             } catch (FileCannotBeAdded $e) {
                 throw new \Exception('Failed to upload thumbnail.');
             }
