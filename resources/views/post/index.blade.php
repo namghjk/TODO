@@ -81,11 +81,7 @@
                                 @foreach ($posts as $post)
                                     <tr>
                                         <td class="text-center">
-                                            <img src="{{ $post->thumbnail }}"
-                                                style="width: 100px;
-                                                height: 100px;
-                                                object-fit: cover; border-radius: 4px;">
-                                        </td>
+                                            <img src="{{ asset($post->thumbnail) }}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 4px;">
                                         <td>{{ $post->title }}</td>
                                         <td>{{ $post->description }}</td>
                                         <td>{{ $post->publish_date }}</td>

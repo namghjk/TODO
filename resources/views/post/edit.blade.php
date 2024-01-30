@@ -6,6 +6,8 @@
 @section('content')
     <div class="card-body">
         <div class="form-group">
+            <form action="{{ route('posts.update',$post->id) }}" method="post" enctype="multipart/form-data">
+                @method('PUT')
                 @csrf
                 <button type="submit" class="btn btn-danger col-1 mt-5 float-right">Submit</button>
                 <div class="mb-3">

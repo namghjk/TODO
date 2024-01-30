@@ -59,6 +59,7 @@ class AuthService
         $user->save();
 
         Mail::to($user->email)->send(new RegistrationSuccessEmail($user));
+        redirect()->to(route('login'))->with('success', 'Register new user successfully');
     }
 
     public function forgetPassword(ForgotPassRequest $request)

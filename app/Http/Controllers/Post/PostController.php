@@ -7,11 +7,13 @@ use App\Http\Requests\UploadPostRequest;
 use App\Models\Post;
 use App\Models\User;
 use App\Services\Post\PostService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Illuminate\Support\Str;
+use PhpParser\Node\Stmt\TryCatch;
 
 class PostController extends Controller
 {
@@ -87,6 +89,10 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $user = Auth::user();
+        if ($post->user_id !== $user->id) {
+            abort(404);
+        }
+
         return view('post.edit', compact('post', 'user'), ['title' => $post->title]);
     }
 
@@ -97,9 +103,18 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UploadPostRequest $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        if ($post->user_id !== auth()->id()) {
+            abort(404);
+        }
+        try {
+            $post = $this->postService->update($request, $post);
+            return redirect()->to(route('posts.index'))->with('success', 'Update post successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -110,18 +125,21 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
-        $post->delete();
-
-        Session::flash('success', 'Delete post successfully');
-        return redirect()->to(route('posts.index'));
+        try {
+            $post = $this->postService->destroy($id);
+            return redirect()->to(route('posts.index'))->with('success', 'Delete post successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     public function deleteAll()
     {
-        $user = Auth::user();
-        $user->posts()->delete();
-        Session::flash('success', 'Delete all post successfully');
-        return redirect()->to(route('posts.index'));
+        try {
+            $post = $this->postService->deleteAll();
+            return redirect()->to(route('posts.index'))->with('success', 'Delete all post successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

@@ -34,7 +34,6 @@ class RegisterController extends Controller
     {
         try {
             $user = $this->authService->register($request);
-            return redirect()->route('login')->with('success', 'Register new user successfully');
         } catch (\Exception $e) {
             Session::flash('error', $e->getMessage());
             return redirect()->back();

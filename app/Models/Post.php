@@ -54,6 +54,7 @@ class Post extends Model implements HasMedia
         return asset('thumbnails/default.png');
     }
 
+
     public function scopeStatusNewPost($query, $status = 0)
     {
         return $query->where('status', $status);

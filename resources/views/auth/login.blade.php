@@ -6,6 +6,7 @@
 </head>
 
 <body class="hold-transition login-page">
+    @include('partials.alert')
     <div class="login-box">
         <div class="login-logo">
             <a href="#"><b>Admin</b>LTE</a>
