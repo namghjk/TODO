@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\News\NewsController;
 use App\Http\Controllers\User\UserInforController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
@@ -35,7 +36,7 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'postForgetPas
 Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('reset_password');
 Route::post('/reset-password', [ForgotPasswordController::class, 'postResetPassword'])->name('post_reset_password');
 
-Route::middleware(['auth', 'checkUserStatus','preventBackHistory'])->group(function () {
+Route::middleware(['auth', 'checkUserStatus', 'preventBackHistory'])->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('home');
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
@@ -44,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user-infor/{id}', [UserInforController::class, 'update'])->name('update_user_infor');
 
     Route::delete('/posts/delete-all', [PostController::class, 'deleteAll'])->name('delete_all_posts');
-    
+
     Route::resource('posts', PostController::class);
 });
+
+Route::get('/news', [NewsController::class, 'show'])->name('show');
+Route::get('/news/{slug}', [NewsController::class, 'detailNews'])->name('detail_news');

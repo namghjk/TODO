@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -26,6 +27,16 @@ class Post extends Model implements HasMedia
     protected $dates = [
         'publish_date',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($post) {
+            if ($post->isDirty('status') && $post->status == 1) {
+                $post->publish_date = Carbon::now();
+            }
+        });
+    }
 
     public function user()
     {
