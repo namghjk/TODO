@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\ManagePostController;
+use App\Http\Controllers\Admin\ManageUserController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\News\NewsController;
 use App\Http\Controllers\User\UserInforController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,13 +43,21 @@ Route::middleware(['auth', 'checkUserStatus', 'preventBackHistory'])->group(func
     Route::get('/', [MainController::class, 'index'])->name('home');
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'preventBackHistory'])->group(function () {
     Route::get('/user-infor/{id}', [UserInforController::class, 'index'])->name('user_infor');
     Route::post('/user-infor/{id}', [UserInforController::class, 'update'])->name('update_user_infor');
 
     Route::delete('/posts/delete-all', [PostController::class, 'deleteAll'])->name('delete_all_posts');
 
     Route::resource('posts', PostController::class);
+
+    Route::prefix('admin')->group(function () {
+        Route::resource('manage-post', ManagePostController::class);
+        Route::resource('manage-user', ManageUserController::class);
+
+        Route::delete('/manage-post/delete-all', [ManagePostController::class, 'deleteAll'])->name('delete_all_manage_posts');
+
+    });
 });
 
 Route::get('/news', [NewsController::class, 'show'])->name('show');

@@ -72,7 +72,7 @@ class AuthService
 
         if ($existingRequest) {
             Session::flash('error', 'A password reset request has already been sent for this email address.');
-            return redirect()->to(route('forgotPassword'));
+            return redirect()->to(route('forgot_password'));
         }
 
         DB::table('password_resets')->insert([

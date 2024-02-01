@@ -33,7 +33,7 @@ class LoginController extends Controller
     {
         try {
             $user = $this->authService->login($request);
-            return redirect()->route('home')->with('user', $user);
+            return redirect()->route('posts.index')->with('user', $user);
         } catch (\Exception $e) {
             Session::flash('error', $e->getMessage());
             return redirect()->back();

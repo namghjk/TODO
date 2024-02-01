@@ -50,7 +50,7 @@
                     <ul class="nav nav-treeview">
 
                         <li class="nav-item">
-                            <a href="{{ route('posts.create') }}" class="nav-link">
+                            <a href="{{ route('manage-post.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add new post</p>
                             </a>
@@ -59,9 +59,65 @@
 
 
                         <li class="nav-item">
-                            <a href="{{ route('posts.index') }}" class="nav-link">
+                            <a href="{{ route('manage-user.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All post</p>
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </li>
+                <li class="nav-item menu-open">
+
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Post
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{ route('manage-post.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create post </p>
+                            </a>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a href="{{ route('manage-post.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Show all posts</p>
+                            </a>
+                        </li>
+
+
+
+
+                    </ul>
+                </li>
+                <li class="nav-item menu-open">
+
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            User
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('manage-user.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Show all users</p>
                             </a>
                         </li>
 

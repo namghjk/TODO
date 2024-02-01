@@ -10,6 +10,6 @@ class MainController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('admin.home', ['title' => 'Home','user'=>$user]);
+        return view('admin.pages.home', ['title' => 'Home','user'=>$user]);
     }
 }

@@ -42,11 +42,11 @@ class ForgotPasswordController extends Controller
             return view('auth.newPassword', ['title' => 'Reset Password'], compact('token'));
         } catch (\Exception $e) {
             Session::flash('error', $e->getMessage());
-            return redirect()->to(route('forgotPassword'));
+            return redirect()->to(route('forgot_password'));
         }
 
         Session::flash('success', 'We have sent an email to reset your password');
-        return redirect()->to(route('forgot_password'));
+        return redirect()->to(route('reset_password'));
     }
 
 
