@@ -86,12 +86,11 @@ class ManagePostController extends Controller
         $user = Auth::user();
         $post = Post::findOrFail($id);
 
-
-        if ($post->status !== $request->status) {
-            Mail::to($user->email)->send(new ChangeStatusPostSuccess($user, $post));
-        }
-
         try {
+
+            if ($post->status !== $request->status) {
+                dispatch(new SendNotificationChangePostStatus($user, $post));
+            }
             $post = $this->manageService->update($request, $post);
 
             return redirect()->to(route('manage-post.index'))->with('success', 'Update post successfully');
