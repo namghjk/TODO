@@ -20,14 +20,14 @@ class ManageService implements HasMedia
 
     public function destroy($id)
     {
-        $post = Post::find($id);
-        $post->delete();
+        $manage_post = Post::find($id);
+        $manage_post->delete();
     }
 
     public function deleteAll()
     {
-        $post = Post::all();
-        $post->delete();
+        $manage_post = Post::all();
+        $manage_post->delete();
     }
 
     public function store(UploadPostRequest $request)
@@ -36,7 +36,7 @@ class ManageService implements HasMedia
         $validatedData = $request->validated();
 
         $user = Auth::user();
-        $post = new Post([
+        $manage_post = new Post([
             'user_id' => $user->id,
             'title' => $validatedData['title'],
             'description' => $validatedData['description'],
@@ -46,7 +46,7 @@ class ManageService implements HasMedia
         if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
             try {
                 $thumbnail = $request->file('thumbnail');
-                $post->addMedia($thumbnail)->toMediaCollection('thumbnail');
+                $manage_post->addMedia($thumbnail)->toMediaCollection('thumbnail');
             } catch (FileCannotBeAdded $e) {
                 throw new \Exception('Failed to upload thumbnail.');
             }
@@ -62,27 +62,27 @@ class ManageService implements HasMedia
         }
 
 
-        $post->slug = $slug;
-        $post->save();
+        $manage_post->slug = $slug;
+        $manage_post->save();
 
-        return $post;
+        return $manage_post;
     }
 
-    public function update( UpdatePostRequest $request, Post $post)
+    public function update( UpdatePostRequest $request, Post $manage_post)
     {
 
         $user = Auth::user();
       
-        $post->title = $request['title'];
-        $post->description = $request['description'];
-        $post->content = $request['content'];
-        $post->status = $request['status'];
+        $manage_post->title = $request['title'];
+        $manage_post->description = $request['description'];
+        $manage_post->content = $request['content'];
+        $manage_post->status = $request['status'];
 
         if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
-            $post->media()->delete();
+            $manage_post->media()->delete();
             $thumbnail = $request->file('thumbnail');
-            $post->addMedia($thumbnail)->toMediaCollection('thumbnail');
-            $post->thumbnail = $post->getFirstMediaUrl('thumbnail');
+            $manage_post->addMedia($thumbnail)->toMediaCollection('thumbnail');
+            $manage_post->thumbnail = $manage_post->getFirstMediaUrl('thumbnail');
         }
 
 
@@ -91,14 +91,14 @@ class ManageService implements HasMedia
         $slug = $baseSlug;
         $counter = 1;
 
-        while (Post::where('slug', $slug)->where('id', '!=', $post->id)->exists()) {
+        while (Post::where('slug', $slug)->where('id', '!=', $manage_post->id)->exists()) {
             $slug = $baseSlug . '-' . $counter;
             $counter++;
         }
 
-        $post->slug = $slug;
-        $post->save();
+        $manage_post->slug = $slug;
+        $manage_post->save();
 
-        return $post;
+        return $manage_post;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services\Post;
 
+use App\Http\Requests\UpdatePostRequest;
 use App\Http\Requests\UploadPostRequest;
 use App\Models\Media;
 use App\Models\Post;
@@ -29,8 +30,8 @@ class PostService implements HasMedia
 
     public function store(UploadPostRequest $request)
     {
-        
-    
+
+
         $validatedData = $request->validated();
 
         $user = Auth::user();
@@ -65,24 +66,22 @@ class PostService implements HasMedia
         return $post;
     }
 
-    public function update(UploadPostRequest $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $validatedData = $request->validated();
 
-        $post->title = $validatedData['title'];
-        $post->description = $validatedData['description'];
+        $post->title = $request['title'];
+        $post->description = $request['description'];
         $post->content = $request['content'];
 
         if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
-            
-                $post->media()->delete();
-                $thumbnail = $request->file('thumbnail');
-                $post->addMedia($thumbnail)->toMediaCollection('thumbnail');
-                $post->thumbnail = $post->getFirstMediaUrl('thumbnail');
-            
+
+            $post->media()->delete();
+            $thumbnail = $request->file('thumbnail');
+            $post->addMedia($thumbnail)->toMediaCollection('thumbnail');
+            $post->thumbnail = $post->getFirstMediaUrl('thumbnail');
         }
 
-        $baseSlug = Str::slug($validatedData['title'], '-');
+        $baseSlug = Str::slug($request['title'], '-');
         $slug = $baseSlug;
         $counter = 1;
 

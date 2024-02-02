@@ -6,10 +6,9 @@
 @section('content')
     <div class="card-body">
         <div class="form-group">
-            <form action="{{ route('posts.update',$post->id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('posts.update',$post) }}" method="post" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-                <button type="submit" class="btn btn-danger col-1 mt-5 float-right">Submit</button>
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control" name="title" placeholder="Enter title"

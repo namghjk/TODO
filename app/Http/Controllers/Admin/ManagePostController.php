@@ -31,8 +31,8 @@ class ManagePostController extends Controller
             abort(404);
         }
 
-        $posts = Post::paginate(2);
-        return view('admin.pages.post.index', compact('posts', 'user'), ['title' => 'Show all posts']);
+        $manage_posts = Post::paginate(2);
+        return view('admin.pages.post.index', compact('manage_posts', 'user'), ['title' => 'Show all posts']);
     }
 
     public function create()
@@ -46,7 +46,7 @@ class ManagePostController extends Controller
     public function store(UploadPostRequest $request)
     {
         try {
-            $post = $this->manageService->store($request);
+            $manage_post = $this->manageService->store($request);
             return redirect()->back()->with('success', 'Post created successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -54,10 +54,10 @@ class ManagePostController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Post $manage_post)
     {
         try {
-            $post = $this->manageService->destroy($id);
+            $manage_post = $this->manageService->destroy($manage_post);
             return redirect()->to(route('admin.pages.post.index'))->with('success', 'Delete post successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -74,28 +74,47 @@ class ManagePostController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit(Post $manage_post)
     {
-        $post = Post::findOrFail($id);
         $user = Auth::user();
-        return view('admin.pages.post.edit', compact('post', 'user'), ['title' => $post->title]);
+        // $post = Post::findOrFail($id);
+        return view('admin.pages.post.edit', compact('manage_post', 'user'), ['title' => $manage_post->title]);
     }
 
-    public function update(UpdatePostRequest $request, $id)
+    public function update(UpdatePostRequest $request, Post $manage_post)
     {
         $user = Auth::user();
-        $post = Post::findOrFail($id);
 
         try {
 
-            if ($post->status !== $request->status) {
-                dispatch(new SendNotificationChangePostStatus($user, $post));
+            if ($manage_post->status !== $request->status) {
+                dispatch(new SendNotificationChangePostStatus($user, $manage_post));
             }
-            $post = $this->manageService->update($request, $post);
+            $post = $this->manageService->update($request, $manage_post);
 
             return redirect()->to(route('manage-post.index'))->with('success', 'Update post successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+
+    public function search(Request $request)
+    {
+
+        $search = $request->input('search');
+        $manage_posts = Post::paginate(2);
+        $user = Auth::user();
+        if ($search !== null) {
+            $manage_posts = Post::where(function ($query) use ($search) {
+                $query->where('title', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%");
+            })
+                ->orWhereHas('user', function ($query) use ($search) {
+                    $query->where('email', 'like', "%$search%");
+                })->paginate(2);
+            return view('admin.pages.post.index', compact('manage_posts', 'search', 'user'), ['title' => 'Search']);
+        }
+        return view('admin.pages.post.index', compact('manage_posts', 'user'), ['title' => 'Show all posts']);
     }
 }
