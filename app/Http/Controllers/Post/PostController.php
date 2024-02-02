@@ -104,15 +104,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePostRequest $request, $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $post = Post::findOrFail($id);
         if ($post->user_id !== auth()->id()) {
             abort(404);
         }
         try {
             $post = $this->postService->update($request, $post);
-            return redirect()->to(route('posts.index'))->with('success', 'Update post successfully');
+            return redirect()->route('posts.index')->with('success', 'Update post successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -124,11 +123,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
         try {
-            $post = $this->postService->destroy($id);
-            return redirect()->to(route('posts.index'))->with('success', 'Delete post successfully');
+            $this->postService->destroy($post->id);
+            return redirect()->route('posts.index')->with('success', 'Delete post successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

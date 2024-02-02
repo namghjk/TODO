@@ -27,6 +27,7 @@ class uploadPostRequest extends FormRequest
             'title' => 'required|string|max:100',
             'description' => 'nullable|string|max:200',
             'thumbnail' => 'required|image|max:2048',
+            'content' => 'nullable',
         ];
     }
 }

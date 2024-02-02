@@ -6,13 +6,14 @@
 @section('content')
     <div class="card-body">
         <div class="form-group">
-            <form action="{{ route('manage-post.update', $post->id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('manage-post.update',$manage_post) }}" method="POST"
+                enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" class="form-control" name="title" placeholder="Enter title"
-                        value="{{ $post->title }}">
+                        value="{{ $manage_post->title }}">
                     @error('title')
                         <span class="error" style="color: red">{{ $message }}</span>
                     @enderror
@@ -20,25 +21,26 @@
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <input type="text" class="form-control" name="description" placeholder="Enter description"
-                        value="{{ $post->description }}">
+                        value="{{ $manage_post->description }}">
                     @error('description')
                         <span class="error" style="color: red">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="mb-3">
                     <label for="content" class="form-label">Content</label>
-                    <textarea class="form-control" id="description" name="content" placeholder="Enter content">{{ $post->content }}</textarea>
+                    <textarea class="form-control" id="description" name="content" placeholder="Enter content">{{ $manage_post->content }}</textarea>
                 </div>
                 <div class="mb-3">
                     <label for="thumbnail" class="form-label">Thumbnail Image</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail" value="{{ $post->thumbnail }}">
-                        <label class="custom-file-label" for="thumbnail">{{ basename($post->thumbnail) }}</label>
+                        <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail"
+                            value="{{ $manage_post->thumbnail }}">
+                        <label class="custom-file-label" for="thumbnail">Choose file</label>
                     </div>
                     <div class=" mt-2 ">
-                        <img src="{{ $post->thumbnail }}"
+                        <img src="{{ $manage_post->thumbnail }}"
                             style="width: 100px; height: 100px; object-fit: cover; border-radius: 4px;">
-                        <label>{{ basename($post->thumbnail) }}</label>
+                        <label>{{ basename($manage_post->thumbnail) }}</label>
                     </div>
                     @error('thumbnail')
                         <span class="error" style="color: red">{{ $message }}</span>
@@ -49,8 +51,8 @@
                     <div class="form-group">
                         <label>Status</label>
                         <select class="form-control" name="status">
-                            <option value="0" {{ $post->status == 0 ? 'selected' : '' }}>Chưa xác thực</option>
-                            <option value="1" {{ $post->status == 1 ? 'selected' : '' }}>Xác thực</option>
+                            <option value="0" {{ $manage_post->status == 0 ? 'selected' : '' }}>Chưa xác thực</option>
+                            <option value="1" {{ $manage_post->status == 1 ? 'selected' : '' }}>Xác thực</option>
                         </select>
                     </div>
                 </div>

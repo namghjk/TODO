@@ -91,7 +91,7 @@
                                                 <a class="btn btn-danger mr-1 deletePostBtn" style="border-radius: 4px"
                                                     data-post-id="{{ $post->id }}"><i class="fa fa-trash"></i></a>
 
-                                                <a href="{{ route('posts.edit', ['post' => $post->id]) }}"
+                                                <a href="{{ route('posts.edit', ['post' => $post]) }}"
                                                     class="btn btn-primary mr-1" style="border-radius: 4px"><i
                                                         class="fa fa-edit"></i></a>
                                                 <a href="{{ route('posts.show', $post->id) }}" class="btn btn-success mr-1"
