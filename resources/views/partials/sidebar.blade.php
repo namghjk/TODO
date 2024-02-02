@@ -14,7 +14,7 @@
                 <img src="/template/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="{{ route('user_infor', $user->id) }}" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('user_infor', Auth::user()->id) }}" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -52,7 +52,7 @@
                         <li class="nav-item">
                             <a href="{{ route('posts.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Add new post</p>
+                                <p>Create post</p>
                             </a>
                         </li>
 
@@ -61,7 +61,7 @@
                         <li class="nav-item">
                             <a href="{{ route('posts.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>All post</p>
+                                <p>Show all post</p>
                             </a>
                         </li>
 

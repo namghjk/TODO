@@ -57,7 +57,8 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
 
         Route::delete('/manage-post/delete-all', [ManagePostController::class, 'deleteAll'])->name('delete_all_manage_posts');
 
-        Route::get('/search', [ManagePostController::class, 'search'])->name('search');
+        Route::get('/search-post', [ManagePostController::class, 'search'])->name('search_post');
+        Route::get('/search-user', [ManageUserController::class, 'search'])->name('search_user');
     });
 });
 

@@ -70,7 +70,7 @@
                             </div>
 
                             <div class="col-sm-8 col-md-2">
-                                <form method="GET" action="{{ route('search') }}">
+                                <form method="GET" action="{{ route('search_post') }}">
                                     <div class="input-group rounded">
 
                                         <input type="search" class="form-control rounded w-75" placeholder="Search"
