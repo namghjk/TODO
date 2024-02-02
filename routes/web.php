@@ -39,11 +39,10 @@ Route::post('/forgot-password', [ForgotPasswordController::class, 'postForgetPas
 Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('reset_password');
 Route::post('/reset-password', [ForgotPasswordController::class, 'postResetPassword'])->name('post_reset_password');
 
-Route::middleware(['auth', 'checkUserStatus', 'preventBackHistory'])->group(function () {
+
+Route::middleware(['auth', 'preventBackHistory', 'checkUserStatus'])->group(function () {
     Route::get('/', [MainController::class, 'index'])->name('home');
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
-});
-Route::middleware(['auth', 'preventBackHistory'])->group(function () {
     Route::get('/user-infor/{id}', [UserInforController::class, 'index'])->name('user_infor');
     Route::post('/user-infor/{id}', [UserInforController::class, 'update'])->name('update_user_infor');
 
@@ -57,7 +56,8 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function () {
 
         Route::delete('/manage-post/delete-all', [ManagePostController::class, 'deleteAll'])->name('delete_all_manage_posts');
 
-        Route::get('/search', [ManagePostController::class, 'search'])->name('search');
+        Route::get('/search-post', [ManagePostController::class, 'search'])->name('search_post');
+        Route::get('/search-user', [ManageUserController::class, 'search'])->name('search_user');
     });
 });
 

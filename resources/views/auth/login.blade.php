@@ -5,6 +5,7 @@
     @include('partials.header')
 </head>
 
+
 <body class="hold-transition login-page">
     @include('partials.alert')
     <div class="login-box">

@@ -20,6 +20,8 @@
     </div>
 @endif
 
+
+
 <script>
     setTimeout(function() {
         var alerts = document.querySelectorAll('.auto-dismiss');

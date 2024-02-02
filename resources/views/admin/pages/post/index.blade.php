@@ -1,5 +1,11 @@
 @extends('partials.main')
+
 @section('content')
+@if (Session::has('success login'))
+    <div class="alert alert-success auto-dismiss">
+        {{ Session::get('success login') }}
+    </div>
+@endif
     <!-- Delete All Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -70,7 +76,7 @@
                             </div>
 
                             <div class="col-sm-8 col-md-2">
-                                <form method="GET" action="{{ route('search') }}">
+                                <form method="GET" action="{{ route('search_post') }}">
                                     <div class="input-group rounded">
 
                                         <input type="search" class="form-control rounded w-75" placeholder="Search"

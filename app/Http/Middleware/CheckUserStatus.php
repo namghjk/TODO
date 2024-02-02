@@ -28,7 +28,7 @@ class CheckUserStatus
                 Session::flash('error', 'Your account is waiting for approving');
                 return redirect()->route('login');  // Chuyển hướng đến trang thông báo chờ phê duyệt
             } elseif ($user->status == 1) {
-                Session::flash('success', 'Login Successfully');
+                Session::flash('success login', 'Login Successfully');
                 return $next($request); // Cho phép truy cập vào tuyến đường
             } elseif ($user->status == 2) {
 
@@ -38,7 +38,6 @@ class CheckUserStatus
                 Session::flash('error', 'Your account is refused');
                 return redirect()->route('login'); // Chuyển hướng đến trang đăng nhập
             } else {
-
                 Auth::guard('web')->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
