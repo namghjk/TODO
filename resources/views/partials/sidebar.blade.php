@@ -18,18 +18,7 @@
             </div>
         </div>
 
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                    aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+       
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -37,95 +26,99 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
+                @hasanyrole('user')
+                    <li class="nav-item menu-open">
 
-                    <a href="#" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Post
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Post
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
 
-                    <ul class="nav nav-treeview">
+                        <ul class="nav nav-treeview">
 
-                        <li class="nav-item">
-                            <a href="{{ route('posts.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Create post</p>
-                            </a>
-                        </li>
-
-
-
-                        <li class="nav-item">
-                            <a href="{{ route('posts.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Show all post</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ route('posts.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create post</p>
+                                </a>
+                            </li>
 
 
 
-
-                    </ul>
-                </li>
-                <li class="nav-item menu-open">
-
-                    <a href="#" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Post
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-
-                    <ul class="nav nav-treeview">
-
-                        <li class="nav-item">
-                            <a href="{{ route('manage-post.create') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Create post </p>
-                            </a>
-                        </li>
-
-
-
-                        <li class="nav-item">
-                            <a href="{{ route('manage-post.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Show all posts</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ route('posts.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Show all post</p>
+                                </a>
+                            </li>
 
 
 
 
-                    </ul>
-                </li>
-                <li class="nav-item menu-open">
+                        </ul>
+                    </li>
+                @endhasanyrole
 
-                    <a href="#" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            User
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
+                @hasanyrole('admin')
+                    <li class="nav-item menu-open">
 
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('manage-user.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Show all users</p>
-                            </a>
-                        </li>
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Post
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="{{ route('manage-post.create') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create post </p>
+                                </a>
+                            </li>
+
+
+
+                            <li class="nav-item">
+                                <a href="{{ route('manage-post.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Show all posts</p>
+                                </a>
+                            </li>
 
 
 
 
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item menu-open">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                User
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('manage-user.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Show all users</p>
+                                </a>
+                            </li>
+
+
+
+
+                        </ul>
+                    </li>
+                @endhasanyrole
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

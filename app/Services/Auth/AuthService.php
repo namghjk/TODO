@@ -56,10 +56,10 @@ class AuthService
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
+        $user->assignRole('user');
         $user->save();
-
-        Mail::to($user->email)->send(new RegistrationSuccessEmail($user));
-        redirect()->to(route('login'))->with('success', 'Register new user successfully');
+       
+        return $user;
     }
 
     public function forgetPassword(ForgotPassRequest $request)

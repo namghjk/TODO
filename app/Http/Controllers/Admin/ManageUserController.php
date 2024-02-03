@@ -30,6 +30,10 @@ class ManageUserController extends Controller
 
     public function update(UpdateUserRequest $request, User $manage_user)
     {
+        $user = Auth::user();
+        if ($user->role !== 'admin') {
+            abort(404);
+        }
 
         $manage_user->update([
             'first_name' => $request['first_name'],
@@ -43,6 +47,10 @@ class ManageUserController extends Controller
     }
 
     public function search(Request $request){
+        $user = Auth::user();
+        if ($user->role !== 'admin') {
+            abort(404);
+        }
         $search = $request->input('search');
         $manage_users = User::paginate(2);
         if ($search !== null) {

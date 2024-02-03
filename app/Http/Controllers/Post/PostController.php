@@ -36,6 +36,9 @@ class PostController extends Controller
     public function index()
     {
         $user = Auth::user();
+        if ($user->role !== 'user') {
+            abort(404);
+        }
         $posts = $user->posts()->paginate(2);
         return view('post.index', compact('user', 'posts'), ['title' => 'Show all posts']);
     }
@@ -48,6 +51,9 @@ class PostController extends Controller
     public function create()
     {
         $user = Auth::user();
+        if ($user->role !== 'user') {
+            abort(404);
+        }
         return view('post.create', [
             'title' => 'Add new post',
         ])->with('user', $user);
@@ -61,6 +67,10 @@ class PostController extends Controller
      */
     public function store(UploadPostRequest $request)
     {
+        $user = Auth::user();
+        if ($user->role !== 'user') {
+            abort(404);
+        }
         try {
             $post = $this->postService->store($request);
             return redirect()->back()->with('success', 'Post created successfully.');
@@ -90,6 +100,9 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $user = Auth::user();
+        if ($user->role !== 'user') {
+            abort(404);
+        }
         if ($post->user_id !== $user->id) {
             abort(404);
         }
@@ -106,7 +119,10 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        if ($post->user_id !== auth()->id()) {
+        $user = Auth::user();
+        if ($user->role !== 'user') {
+            abort(404);
+        } else if ($post->user_id !== auth()->id()) {
             abort(404);
         }
         try {
@@ -125,6 +141,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $user = Auth::user();
+        if ($user->role !== 'user') {
+            abort(404);
+        }
         try {
             $this->postService->destroy($post->id);
             return redirect()->route('posts.index')->with('success', 'Delete post successfully');
@@ -135,6 +155,10 @@ class PostController extends Controller
 
     public function deleteAll()
     {
+        $user = Auth::user();
+        if ($user->role !== 'user') {
+            abort(404);
+        }
         try {
             $post = $this->postService->deleteAll();
             return redirect()->to(route('posts.index'))->with('success', 'Delete all post successfully');

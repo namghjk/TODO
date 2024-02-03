@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class Admin extends Seeder
 {
@@ -14,14 +15,23 @@ class Admin extends Seeder
      * @return void
      */
     public function run()
-    {
-        User::create([
+    {   
+
+        // Tạo role 'admin' nếu nó chưa tồn tại
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+
+        // Tạo người dùng admin
+        $admin = User::create([
             'first_name' => 'Admin',
             'last_name' => 'Super',
             'email' => 'superadmin@khgc.com',
             'password' => bcrypt('Abcd@1234'),
-            'role' => 'admin',
+            'role'=>'admin',
             'status' => 1,
         ]);
+
+        // Gán role 'admin' cho người dùng admin
+        $admin->assignRole($adminRole);
+
     }
 }
