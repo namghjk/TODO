@@ -13,6 +13,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role;
 
 class ManagePostController extends Controller
 {
@@ -26,6 +27,7 @@ class ManagePostController extends Controller
 
     public function index()
     {
+
         $user = Auth::user();
         if ($user->role !== 'admin') {
             abort(404);
@@ -45,6 +47,10 @@ class ManagePostController extends Controller
 
     public function store(UploadPostRequest $request)
     {
+        $user = Auth::user();
+        if ($user->role !== 'admin') {
+            abort(404);
+        }
         try {
             $manage_post = $this->manageService->store($request);
             return redirect()->back()->with('success', 'Post created successfully.');
@@ -56,6 +62,10 @@ class ManagePostController extends Controller
 
     public function destroy(Post $manage_post)
     {
+        $user = Auth::user();
+        if ($user->role !== 'admin') {
+            abort(404);
+        }
         try {
             $manage_post = $this->manageService->destroy($manage_post);
             return redirect()->to(route('admin.pages.post.index'))->with('success', 'Delete post successfully');
@@ -66,6 +76,11 @@ class ManagePostController extends Controller
 
     public function deleteAll()
     {
+        $user = Auth::user();
+        if ($user->role !== 'admin') {
+            abort(404);
+        }
+        
         try {
             $post = $this->manageService->deleteAll();
             return redirect()->to(route('manage-post.index'))->with('success', 'Delete all post successfully');
@@ -77,13 +92,20 @@ class ManagePostController extends Controller
     public function edit(Post $manage_post)
     {
         $user = Auth::user();
+        if ($user->role !== 'admin') {
+            abort(404);
+        }
         // $post = Post::findOrFail($id);
         return view('admin.pages.post.edit', compact('manage_post', 'user'), ['title' => $manage_post->title]);
     }
 
     public function update(UpdatePostRequest $request, Post $manage_post)
     {
-        $user = Auth::user();
+
+         $user = Auth::user();
+        if ($user->role !== 'admin') {
+            abort(404);
+        }
 
         try {
 
@@ -101,7 +123,10 @@ class ManagePostController extends Controller
 
     public function search(Request $request)
     {
-
+        $user = Auth::user();
+        if ($user->role !== 'admin') {
+            abort(404);
+        }
         $search = $request->input('search');
         $manage_posts = Post::paginate(2);
         $user = Auth::user();
