@@ -5,12 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Services\Admin\ManageUserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class ManageUserController extends Controller
 {
+    protected $manageUserService;
+
+    public function __construct(ManageUserService $manageUserService)
+    {
+        $this->manageUserService = $manageUserService;
+    }
+
+
     public function index()
     {
 
@@ -30,23 +39,17 @@ class ManageUserController extends Controller
 
     public function update(UpdateUserRequest $request, User $manage_user)
     {
-        $user = Auth::user();
-        if ($user->role !== 'admin') {
-            abort(404);
+        try {
+            $manage = $this->manageUserService->update($request,$manage_user);
+            return $manage;
+            
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
-
-        $manage_user->update([
-            'first_name' => $request['first_name'],
-            'last_name' =>  $request['last_name'],
-            'address' =>  $request['address'],
-            'status' => $request['status'],
-        ]);
-        
-        Session::flash('success', 'Update User successfully');
-        return redirect()->to(route('manage-user.index'));
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $user = Auth::user();
         if ($user->role !== 'admin') {
             abort(404);
